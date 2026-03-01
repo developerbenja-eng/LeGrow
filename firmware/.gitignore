@@ -1,0 +1,7 @@
+.pio/
+.vscode/
+lib/
+*.o
+*.a
+*.so
+*.dylib
