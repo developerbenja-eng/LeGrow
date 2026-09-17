@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 // ============================================
-// GrowBox ESP32 Configuration
+// LeGrow ESP32 Configuration
 // ============================================
 
 // --- WiFi ---
@@ -12,9 +12,9 @@
 // --- MQTT (for dashboard communication) ---
 #define MQTT_SERVER "YOUR_MQTT_SERVER"  // e.g., "192.168.1.100" or "mqtt.example.com"
 #define MQTT_PORT 1883
-#define MQTT_USER "growbox"
+#define MQTT_USER "legrow"
 #define MQTT_PASSWORD "YOUR_MQTT_PASSWORD"
-#define MQTT_TOPIC_PREFIX "growbox"
+#define MQTT_TOPIC_PREFIX "legrow"
 
 // --- Pin Definitions ---
 // I2C Bus (shared by SCD41, BH1750, SSD1306)

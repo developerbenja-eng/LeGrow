@@ -1,4 +1,4 @@
-# GrowBox
+# LeGrow
 
 Indoor berry growing system with ESP32 sensor monitoring and a Next.js dashboard.
 
@@ -9,7 +9,7 @@ A complete indoor growing setup for strawberries (and eventually raspberries, bl
 ## Project Structure
 
 ```
-growbox/
+LeGrow/
 ├── src/                    # Next.js dashboard app
 │   └── app/
 │       ├── page.tsx        # Landing page with research links
