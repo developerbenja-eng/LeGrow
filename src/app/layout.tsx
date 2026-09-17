@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GrowBox - Indoor Berry Growing System",
+  title: "LeGrow - Indoor Berry Growing System",
   description: "Monitor and automate indoor berry growing with ESP32 sensors and Next.js dashboard",
 };
 

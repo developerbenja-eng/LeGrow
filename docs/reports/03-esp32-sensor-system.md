@@ -498,7 +498,7 @@ ESPHome compiles a custom firmware from a YAML configuration file. It integrates
 
 ```yaml
 esphome:
-  name: growbox
+  name: legrow
   platform: ESP32
   board: esp32dev
 
@@ -563,7 +563,7 @@ switch:
 
 ### Option 3: MQTT + Custom Next.js Dashboard
 
-Publish sensor readings to an MQTT broker (like Mosquitto) and build a custom Next.js dashboard that subscribes to the topics. This integrates directly with the growbox web application.
+Publish sensor readings to an MQTT broker (like Mosquitto) and build a custom Next.js dashboard that subscribes to the topics. This integrates directly with the legrow web application.
 
 **Pros:** Full custom UI, integrates with the existing Next.js project, no Home Assistant dependency.
 
@@ -572,23 +572,23 @@ Publish sensor readings to an MQTT broker (like Mosquitto) and build a custom Ne
 **MQTT topic structure:**
 
 ```
-growbox/sensors/co2          → 823
-growbox/sensors/temperature  → 72.4
-growbox/sensors/humidity     → 55.2
-growbox/sensors/soil/1       → 62
-growbox/sensors/soil/2       → 58
-growbox/sensors/soil/3       → 71
-growbox/sensors/soil_temp    → 65.1
-growbox/sensors/light_lux    → 18500
-growbox/sensors/light_ppfd   → 342
-growbox/actuators/light      → ON
-growbox/actuators/exhaust    → OFF
-growbox/actuators/pump       → OFF
-growbox/actuators/clipfan    → ON
-growbox/commands/light       → ON/OFF (subscribe for remote control)
-growbox/commands/pump        → ON/OFF
-growbox/commands/exhaust     → ON/OFF
-growbox/commands/clipfan     → ON/OFF
+legrow/sensors/co2          → 823
+legrow/sensors/temperature  → 72.4
+legrow/sensors/humidity     → 55.2
+legrow/sensors/soil/1       → 62
+legrow/sensors/soil/2       → 58
+legrow/sensors/soil/3       → 71
+legrow/sensors/soil_temp    → 65.1
+legrow/sensors/light_lux    → 18500
+legrow/sensors/light_ppfd   → 342
+legrow/actuators/light      → ON
+legrow/actuators/exhaust    → OFF
+legrow/actuators/pump       → OFF
+legrow/actuators/clipfan    → ON
+legrow/commands/light       → ON/OFF (subscribe for remote control)
+legrow/commands/pump        → ON/OFF
+legrow/commands/exhaust     → ON/OFF
+legrow/commands/clipfan     → ON/OFF
 ```
 
 ### Recommended Approach
@@ -605,7 +605,7 @@ The SSD1306 128x64 pixel display can show a compact summary of all critical read
 
 ```
 ┌──────────────────────┐
-│ GROWBOX       12:34p │
+│ LEGROW       12:34p │
 │                      │
 │ Temp    72.4°F       │
 │ Humid   55.2%        │
@@ -675,7 +675,7 @@ Home Assistant provides:
 
 ### Option B: MQTT + Custom Next.js Dashboard (Full Control)
 
-For the growbox Next.js project, the architecture would be:
+For the legrow Next.js project, the architecture would be:
 
 ```
 ESP32 → MQTT Broker (Mosquitto) → Next.js API Route (MQTT subscriber)
@@ -689,7 +689,7 @@ ESP32 → MQTT Broker (Mosquitto) → Next.js API Route (MQTT subscriber)
 
 **Implementation steps:**
 1. Run Mosquitto MQTT broker (Docker or native install).
-2. Create a Next.js API route or background worker that subscribes to `growbox/#` topics.
+2. Create a Next.js API route or background worker that subscribes to `legrow/#` topics.
 3. On each message, write the reading to the database with a timestamp.
 4. Build dashboard pages with time-series charts (e.g., using Recharts or Chart.js).
 5. Add WebSocket or Server-Sent Events for real-time updates to the UI.
@@ -759,5 +759,5 @@ A 5V 2A USB power supply provides ample headroom. The peristaltic pump runs on i
 3. **Flash ESPHome** -- Create the YAML config and connect to Home Assistant for immediate monitoring.
 4. **Calibrate sensors** -- Calibrate soil moisture sensors (dry/wet readings), verify CO2 baseline, and confirm light sensor readings against known conditions.
 5. **Build automation rules** -- Start with watering automation (most impactful), then add fan control and light scheduling.
-6. **Build the dashboard** -- Integrate MQTT into the Next.js growbox app for a custom monitoring UI.
+6. **Build the dashboard** -- Integrate MQTT into the Next.js legrow app for a custom monitoring UI.
 7. **Enclosure and permanent wiring** -- Move from breadboard to a soldered perfboard or custom PCB. Mount in a weatherproof enclosure.

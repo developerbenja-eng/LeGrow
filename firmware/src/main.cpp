@@ -1,5 +1,5 @@
 /**
- * GrowBox - Indoor Berry Growing Monitor & Automation
+ * LeGrow - Indoor Berry Growing Monitor & Automation
  *
  * ESP32-based system for monitoring and automating an indoor
  * grow tent for strawberry (and future berry) production.
@@ -153,7 +153,7 @@ void reconnectMQTT() {
     if (mqtt.connected()) return;
 
     Serial.print("Connecting to MQTT...");
-    String clientId = "growbox-" + String(random(0xffff), HEX);
+    String clientId = "legrow-" + String(random(0xffff), HEX);
 
     if (mqtt.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD)) {
         Serial.println("connected!");
@@ -247,7 +247,7 @@ void setupDisplay() {
         display.setTextSize(1);
         display.setTextColor(SSD1306_WHITE);
         display.setCursor(0, 0);
-        display.println("GrowBox v1.0");
+        display.println("LeGrow v1.0");
         display.println("Initializing...");
         display.display();
     } else {
@@ -485,7 +485,7 @@ void setup() {
 
     Serial.println();
     Serial.println("================================");
-    Serial.println("  GrowBox v1.0");
+    Serial.println("  LeGrow v1.0");
     Serial.println("  Indoor Berry Monitor");
     Serial.println("================================");
     Serial.println();
