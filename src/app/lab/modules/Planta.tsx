@@ -105,6 +105,44 @@ export default function Planta() {
         </p>
       </section>
 
+      {/* Bare roots vs seed */}
+      <section>
+        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Bare roots, no semilla</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h4 className="font-semibold text-gray-200 mb-2">No se reproduce fiel</h4>
+            <p className="text-sm text-gray-500">
+              Seascape es un cultivar — un clon especifico de <em>Fragaria × ananassa</em>, que es un hibrido. Su
+              semilla da hermanos geneticamente distintos, ninguno de los cuales es Seascape. El informe 01 solo lista
+              alpinas y tomates bajo &quot;empezar de semilla&quot;.
+            </p>
+          </div>
+          <div className="bg-gray-900 border border-green-800/50 rounded-xl p-5">
+            <h4 className="font-semibold text-green-400 mb-2">La identidad genetica es estructural</h4>
+            <p className="text-sm text-gray-400">
+              El piso de ruido solo significa algo si las tres plantas son{' '}
+              <span className="text-gray-200 font-semibold">clones</span>. Con plantas de semilla, cualquier diferencia
+              mezcla variacion genetica con variacion de manejo, y no hay forma de separarlas despues. El experimento
+              completo se cae.
+            </p>
+          </div>
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h4 className="font-semibold text-gray-200 mb-2">25 para plantar 3</h4>
+            <p className="text-sm text-gray-500">
+              $18.99 las 25, unos $0.76 por clon. Las 22 de sobra no son desperdicio: permiten{' '}
+              <span className="text-gray-300">elegir las 3 coronas mas parecidas</span> por tamano y peso. Partir de
+              material emparejado reduce la varianza inicial, que es justo lo que quieres antes de medirla.
+            </p>
+          </div>
+        </div>
+        <p className="text-xs text-gray-600 mt-3">
+          La ventana de marzo que asume el cronograma del informe 05 no resulto vinculante: hay plantas en frio
+          despachando en septiembre. Aun asi, las coronas se piden{' '}
+          <span className="text-gray-400">despues</span> de que el rig cicle limpio — son material dormante con vida
+          util, y no deben esperar en el refrigerador mientras se arma la carpa.
+        </p>
+      </section>
+
       {/* Crown anatomy */}
       <section>
         <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">El error de un centimetro</h3>
