@@ -47,12 +47,28 @@ export const LAB_MODULES: readonly LabModule[] = [
     icon: 'M12 3 C12 3 5 11 5 15 a7 7 0 0 0 14 0 C19 11 12 3 12 3 Z',
   },
   {
+    slug: 'agua',
+    short: 'Agua',
+    label: 'El agua',
+    blurb:
+      'Llave contra lluvia. El agua de Memphis resulta ser rara de buena, asi que la lluvia hay que justificarla por cerrar el ciclo, no por calidad.',
+    icon: 'M7 16 a4 4 0 0 1 .6-7.96 A5.5 5.5 0 0 1 18 9 a3.5 3.5 0 0 1 0 7 M8 19v2 M12 19.5v2.5 M16 19v2',
+  },
+  {
     slug: 'vpd',
     short: 'VPD',
     label: 'VPD y clima',
     blurb:
       'El repo fija temperatura y humedad por separado, y aparte nombra un objetivo de VPD. Las dos especificaciones casi no se cruzan.',
     icon: 'M4 20 V4 M4 20 H20 M7.5 16.5 h3 v-4 h-3 z M13.5 16.5 h3 v-8 h-3 z',
+  },
+  {
+    slug: 'control',
+    short: 'Control',
+    label: 'Control y dosificacion',
+    blurb:
+      'Un dosificador sin topes puede matar las tres plantas en una noche. La maquina de estados y sus barandas importan mas que el hardware.',
+    icon: 'M9 2v3 M15 2v3 M9 19v3 M15 19v3 M2 9h3 M2 15h3 M19 9h3 M19 15h3 M6 6h12v12H6z M10 10h4v4h-4z',
   },
   {
     slug: 'rotacion',

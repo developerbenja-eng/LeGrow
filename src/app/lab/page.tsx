@@ -1,28 +1,30 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { LAB_MODULES, moduleOpen } from '@/lib/lab-modules';
-import { LOG, SPECIES, bomTotal } from '@/lib/lab-data';
-import { EFFICACY, TARGETS, TENTS, areaM2, dli, monthlyCost, ppfd, vpd } from '@/lib/photometry';
+import { LOG, SPECIES, WATER, bomBlocking, bomOrdered, bomPending, bomSum } from '@/lib/lab-data';
+import { EFFICACY, STACK, TARGETS, TENTS, areaM2, dli, hangRoom, monthlyCost, ppfd, vpd } from '@/lib/photometry';
 
 export const metadata: Metadata = {
   title: 'LeGrow · Laboratorio',
-  description: 'Banco de pruebas hidroponico 2x2: luz, nutrientes, clima, materiales y bitacora.',
+  description: 'Banco de pruebas hidroponico 2x2: luz, planta, agua, nutrientes, clima, control y bitacora.',
 };
 
-const RIG = { watts: 70, hours: 17, tent: TENTS.find((t) => t.id === '2x2')! };
+const RIG = { watts: 100, hours: 17, tent: TENTS.find((t) => t.id === '2x2')! };
 
 export default function LabOverview() {
   const area = areaM2(RIG.tent);
   const ppfdLow = ppfd(RIG.watts, EFFICACY.low, area);
   const ppfdHigh = ppfd(RIG.watts, EFFICACY.high, area);
-  const total = bomTotal();
+  const orderedSum = bomSum(bomOrdered());
+  const pendingSum = bomSum(bomPending());
+  const blocking = bomBlocking();
   const openTotal = LOG.filter((e) => e.state === 'open').length;
 
   const stats = [
-    { label: 'Huella', value: '2 × 2', sub: `${area.toFixed(3)} m² · 4 baldes` },
+    { label: 'Rig', value: `2 × 2 × ${STACK.tentHeight}"`, sub: `${area.toFixed(3)} m² · ${RIG.tent.bucketsPractical} baldes` },
     { label: 'Luz', value: `${RIG.watts} W`, sub: `${RIG.hours} h · ${Math.round(ppfdLow)}–${Math.round(ppfdHigh)} PPFD` },
     { label: 'Costo mensual', value: `$${monthlyCost(RIG.watts, RIG.hours).toFixed(2)}`, sub: 'MLGW · Memphis' },
-    { label: 'Inversion', value: `$${total.low}–${total.high}`, sub: 'contra $640 del plan original' },
+    { label: 'Pedido', value: `$${orderedSum.low.toFixed(0)}`, sub: `falta $${pendingSum.low}–${pendingSum.high}` },
   ];
 
   // One live figure per module, so the board reads as a dashboard and not a menu.
@@ -30,15 +32,31 @@ export default function LabOverview() {
     luz: `${Math.round(ppfdLow)}–${Math.round(ppfdHigh)} PPFD · DLI ${dli(ppfdHigh, RIG.hours).toFixed(1)}`,
     planta: `Seascape · ${SPECIES.filter((s) => s.verdict === 'out').length} especies descartadas`,
     nutrientes: '3 bombas · circuito cerrado',
+    agua: `llave ${WATER.tap.tds} ppm · techo ${WATER.rainfallMm} mm/ano`,
     vpd: `${vpd(24, 40).toFixed(2)} kPa en la esquina legal`,
+    control: 'etapa 0 de 4 · manual',
     rotacion: 'diseno cruzado · 2 carpas',
-    materiales: `$${total.low}–${total.high}`,
     experimento: 'n = 3 · piso de ruido',
+    materiales: `${bomOrdered().length} pedidos · ${bomPending().length} faltan`,
     bitacora: `${openTotal} abiertos · ${LOG.length - openTotal} decididos`,
   };
 
   return (
     <div className="space-y-10">
+      {blocking.length > 0 && (
+        <Link
+          href="/lab/materiales"
+          className="block bg-gray-900 border border-red-800/60 hover:border-red-600 rounded-xl p-5 transition-colors"
+        >
+          <p className="text-sm font-semibold text-red-400">
+            {blocking.length} ítem{blocking.length === 1 ? '' : 's'} del camino critico sin pedir
+          </p>
+          <p className="text-sm text-gray-400 mt-1">
+            {blocking.map((b) => b.item).join(' · ')} — sin eso no se pueden plantar las coronas.
+          </p>
+        </Link>
+      )}
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((s) => (
           <div key={s.label} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
@@ -100,7 +118,8 @@ export default function LabOverview() {
         Todos los numeros se calculan en <code className="text-gray-500">src/lib/photometry.ts</code> a partir de las
         constantes de los informes 01-08. Objetivos vigentes: PPFD {TARGETS.ppfd[0]}–{TARGETS.ppfd[1]} µmol/m²/s · DLI{' '}
         {TARGETS.dli[0]}–{TARGETS.dli[1]} mol/m²/dia · VPD {TARGETS.vpd[0]}–{TARGETS.vpd[1]} kPa · pH {TARGETS.ph[0]}–
-        {TARGETS.ph[1]}. Agregar un modulo es una entrada en{' '}
+        {TARGETS.ph[1]} · EC {TARGETS.ec[0]}–{TARGETS.ec[1]} mS/cm. Cuelgue disponible en la carpa de{' '}
+        {STACK.tentHeight}&quot;: {hangRoom()}&quot;. Agregar un modulo es una entrada en{' '}
         <code className="text-gray-500">src/lib/lab-modules.ts</code>.
       </p>
     </div>

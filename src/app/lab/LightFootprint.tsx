@@ -4,9 +4,11 @@ import { useMemo, useState } from 'react';
 import {
   CAPTURE_EFFICIENCY,
   EFFICACY,
+  STACK,
   TARGETS,
   TENTS,
   areaM2,
+  hangRoom,
   ppf,
   rigSummary,
   type Tent,
@@ -61,7 +63,7 @@ function Readout({
 
 export default function LightFootprint() {
   const [tentId, setTentId] = useState('2x2');
-  const [watts, setWatts] = useState(70);
+  const [watts, setWatts] = useState(100);
   const [hours, setHours] = useState(17);
 
   const tent = useMemo<Tent>(() => TENTS.find((t) => t.id === tentId) ?? TENTS[1], [tentId]);
@@ -318,7 +320,7 @@ export default function LightFootprint() {
               );
             })}
             <text x="100" y="188" textAnchor="middle" className="fill-gray-500" fontSize="9">
-              {tent.buckets} balde{tent.buckets === 1 ? '' : 's'} · {PLANTED} plantado{PLANTED === 1 ? '' : 's'}
+              {tent.buckets} caben · {tent.bucketsPractical} con espacio para trabajar
             </text>
           </svg>
         </div>
@@ -352,6 +354,54 @@ export default function LightFootprint() {
           sub={s.heat < 60 ? 'ventilador clip basta' : 'requiere extractor'}
           tone={s.heat < 60 ? 'ok' : 'near'}
         />
+      </div>
+
+      {/* Vertical stack */}
+      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">
+          Altura — carpa de {STACK.tentHeight}&quot;, y lo que come el balde
+        </p>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-3 font-mono text-sm">
+          {[
+            { v: `${STACK.tentHeight}"`, l: 'carpa' },
+            { v: `− ${STACK.hardware}"`, l: 'herrajes' },
+            { v: `− ${STACK.bucket}"`, l: 'balde 5 gal' },
+            { v: `− ${STACK.plant}"`, l: 'planta' },
+            { v: `${hangRoom()}"`, l: 'cuelgue disponible', hi: true },
+          ].map((step, i, arr) => (
+            <div key={i} className="flex items-center gap-3">
+              <div>
+                <p className={step.hi ? 'text-green-400 font-semibold' : 'text-gray-300'}>{step.v}</p>
+                <p className="text-[10px] text-gray-600 font-sans">{step.l}</p>
+              </div>
+              {i < arr.length - 1 && <span className="text-gray-700">→</span>}
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+          {(
+            [
+              ['Trasplante', STACK.hang.transplant],
+              ['Vegetativo', STACK.hang.vegetative],
+              ['Fructificacion', STACK.hang.fruiting],
+            ] as const
+          ).map(([label, [lo, hi]]) => {
+            const ok = hangRoom() >= lo;
+            return (
+              <div key={label} className={`rounded-lg border px-3 py-2 ${ok ? 'border-gray-800' : 'border-amber-800/50'}`}>
+                <p className="text-xs text-gray-500">{label}</p>
+                <p className={`text-sm font-mono ${ok ? 'text-gray-300' : 'text-amber-400'}`}>
+                  {lo}–{hi}&quot; {ok ? '' : '· atenuar'}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-xs text-gray-600 mt-3">
+          Lo que come la altura no es la planta, es el balde: {STACK.bucket} pulgadas antes de que empiece lo vivo. Si
+          en trasplante falta distancia, se compensa <span className="text-gray-400">atenuando la luz</span> — que
+          fisicamente es lo mismo. Por eso una luz dimeable de 100W resuelve una carpa de 48&quot; y una fija de 70W no.
+        </p>
       </div>
 
       {/* Calculation chain */}

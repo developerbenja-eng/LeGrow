@@ -46,17 +46,37 @@ export type Tent = {
   label: string;
   widthFt: number;
   depthFt: number;
-  /** 5-gallon buckets are ~12in across, so this is floor(w/1ft) * floor(d/1ft). */
+  /** Geometric capacity: 5-gallon buckets are ~12in across, so floor(w) * floor(d). */
   buckets: number;
+  /** What actually fits leaving room for tubing and your hands. */
+  bucketsPractical: number;
   note: string;
 };
 
 export const TENTS: readonly Tent[] = [
-  { id: '16x16', label: '16" x 16"', widthFt: 16 / 12, depthFt: 16 / 12, buckets: 1, note: 'Un balde. Luz muy sobrada.' },
-  { id: '2x2', label: '2 x 2 ft', widthFt: 2, depthFt: 2, buckets: 4, note: 'Cuatro baldes en cuadricula.' },
-  { id: '2x4', label: '2 x 4 ft', widthFt: 2, depthFt: 4, buckets: 8, note: 'Luz insuficiente a 70W.' },
-  { id: '3x3', label: '3 x 3 ft', widthFt: 3, depthFt: 3, buckets: 9, note: 'El plan original, en tierra.' },
+  { id: '16x16', label: '16" x 16"', widthFt: 16 / 12, depthFt: 16 / 12, buckets: 1, bucketsPractical: 1, note: 'Un balde. Luz muy sobrada.' },
+  { id: '2x2', label: '2 x 2 ft', widthFt: 2, depthFt: 2, buckets: 4, bucketsPractical: 3, note: 'Cuatro baldes caben pared a pared; tres dejan espacio para trabajar.' },
+  { id: '2x4', label: '2 x 4 ft', widthFt: 2, depthFt: 4, buckets: 8, bucketsPractical: 6, note: 'El doble de area diluye la misma luz a la mitad.' },
+  { id: '3x3', label: '3 x 3 ft', widthFt: 3, depthFt: 3, buckets: 9, bucketsPractical: 6, note: 'El plan original, en tierra.' },
 ];
+
+/**
+ * Vertical stack of the rig, in inches. A 5-gallon bucket eats 15 inches
+ * before anything living starts, which is what makes tent height tight.
+ */
+export const STACK = {
+  tentHeight: 48,
+  bucket: 15,
+  plant: 10,
+  hardware: 3,
+  /** Report 05 hang distances by stage. */
+  hang: { transplant: [24, 30] as Range, vegetative: [18, 24] as Range, fruiting: [12, 18] as Range },
+} as const;
+
+/** Distance available between the fixture and the canopy, inches. */
+export function hangRoom(tentHeightIn: number = STACK.tentHeight): number {
+  return tentHeightIn - STACK.hardware - (STACK.bucket + STACK.plant);
+}
 
 export function areaM2(tent: Pick<Tent, 'widthFt' | 'depthFt'>): number {
   return tent.widthFt * FT_TO_M * tent.depthFt * FT_TO_M;
