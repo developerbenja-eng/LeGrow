@@ -229,7 +229,53 @@ export const LOG: readonly LogEntry[] = [
     text: 'La carpa 2 se compra en el mes 3-4, cuando los estolones pidan donde enraizar. Antes de eso estaria vacia.',
   },
 
+  {
+    state: 'done',
+    module: 'luz',
+    text: 'Especificaciones reales del VSL-LL100: 521 µmol/m²/s de centro a 12", panel 12x12", IP65, 36.000 h, hasta 7 en cadena. No contradicen nuestro promedio de huella — el suyo es lectura de centro.',
+  },
+  {
+    state: 'done',
+    module: 'luz',
+    text: 'La atenuacion es en cuatro pasos (25/50/75/100) y no continua. El GrowHub tampoco da continuo, solo los mismos escalones.',
+  },
+  {
+    state: 'done',
+    module: 'luz',
+    text: 'VIVOSUN no publica PPF ni eficacia en µmol/J, ni en el manual ni en la ficha. Nuestra estimacion de 2.2-2.7 sigue siendo la unica cifra fotonica disponible.',
+  },
+  {
+    state: 'done',
+    module: 'control',
+    text: 'El puerto de la luz no es LAN: RJ11/RJ12 de seis contactos, bus de control sobre cable de telefono. No hay red ni protocolo que hablar.',
+  },
+  {
+    state: 'done',
+    module: 'control',
+    text: 'La perilla de la luminaria tiene que ir en EXT o el puerto se ignora. Si se encadenan varias, todas en EXT.',
+  },
+
   // --- Open ---
+  {
+    state: 'open',
+    module: 'control',
+    text: 'Identificar los seis pines del bus con los tres tests antes de conectar nada: continuidad sin energia, voltaje en EXT, y 10 kΩ en vez de cortocircuito.',
+  },
+  {
+    state: 'open',
+    module: 'control',
+    text: '¿El bus es 0-10V analogico o seleccion por cuatro lineas? Cuatro senales mas comun mas reserva explicarian los seis pines exactamente, pero la app dice "25%-100%" con guion.',
+  },
+  {
+    state: 'open',
+    module: 'control',
+    text: 'Comprar cable 6P6C, no el 6P4C de telefono comun: entra igual en el jack y deja los pines 1 y 6 sin conectar.',
+  },
+  {
+    state: 'open',
+    module: 'control',
+    text: 'Cerrar el lazo de DLI una vez identificado el bus: BH1750 integra el dia y la atenuacion corrige. Con cuatro escalones, el fotoperiodo queda de control fino.',
+  },
   {
     state: 'open',
     module: 'materiales',
