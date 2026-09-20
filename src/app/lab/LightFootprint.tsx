@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import {
   CAPTURE_EFFICIENCY,
   EFFICACY,
+  FIXTURE,
   STACK,
   TARGETS,
   TENTS,
@@ -402,6 +403,48 @@ export default function LightFootprint() {
           en trasplante falta distancia, se compensa <span className="text-gray-400">atenuando la luz</span> — que
           fisicamente es lo mismo. Por eso una luz dimeable de 100W resuelve una carpa de 48&quot; y una fija de 70W no.
         </p>
+      </div>
+
+      {/* Manufacturer sheet */}
+      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">
+          Ficha del fabricante — VIVOSUN {FIXTURE.model}
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
+          {[
+            { k: 'PPFD', v: `${FIXTURE.ppfdCentreAt12in}`, s: 'centro a 12"' },
+            { k: 'Panel', v: `${FIXTURE.panelIn[0]}×${FIXTURE.panelIn[1]}"`, s: `${FIXTURE.weightLb} lbs` },
+            { k: 'Atenuacion', v: `${FIXTURE.dimSteps.length} pasos`, s: `${FIXTURE.dimSteps.join('/')}%` },
+            { k: 'Vida util', v: `${(FIXTURE.lifespanHours / 1000).toFixed(0)}k h`, s: FIXTURE.ingress },
+            { k: 'En cadena', v: `${FIXTURE.daisyChainMax}`, s: 'luces por bus' },
+            { k: 'Espectro', v: '4', s: FIXTURE.spectrum.join(' · ') },
+          ].map((c) => (
+            <div key={c.k}>
+              <p className="text-[10px] text-gray-500 uppercase tracking-wide">{c.k}</p>
+              <p className="text-lg font-bold text-green-400 leading-tight">{c.v}</p>
+              <p className="text-[10px] text-gray-600">{c.s}</p>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-800">
+          <div>
+            <p className="text-sm font-semibold text-gray-200 mb-1">Los 521 no contradicen nuestros {Math.round(s.ppfdLow)}–{Math.round(s.ppfdHigh)}</p>
+            <p className="text-sm text-gray-500">
+              El numero del fabricante es lectura <span className="text-gray-300">en el centro</span> a 12&quot;; el
+              nuestro es <span className="text-gray-300">promedio sobre toda la huella</span>. Esa relacion es la tipica
+              de un panel. Y a nuestro cuelgue real de {hangRoom()}&quot; la caida deja el centro cerca del objetivo con
+              la luz al 100%.
+            </p>
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-amber-400 mb-1">Lo que VIVOSUN no publica</p>
+            <p className="text-sm text-gray-500">
+              Ni PPF en µmol/s ni eficacia en µmol/J, en el manual ni en la ficha. Por eso nuestra estimacion de{' '}
+              {EFFICACY.low}–{EFFICACY.high} µmol/J sigue siendo la unica cifra fotonica que tenemos. Que no publiquen
+              eficacia es una senal leve: quien tiene buenos numeros los muestra.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Calculation chain */}

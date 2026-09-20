@@ -1,4 +1,21 @@
 import DoserStateMachine from '../DoserStateMachine';
+import DimBus from '../DimBus';
+import { FIXTURE } from '@/lib/photometry';
+
+const BUS_TESTS = [
+  {
+    t: 'Continuidad, sin energia',
+    d: 'Luz desenchufada, multimetro en continuidad, pin por pin entre un jack y el otro. Si todos pitan es bus de paso y los dos jacks son intercambiables. Si alguno no pita, entrada y salida son distintas.',
+  },
+  {
+    t: 'Voltaje, con la perilla en EXT',
+    d: 'Enchufada y en EXT, toma un pin de referencia y mide los otros cinco. Una entrada 0-10V se presenta cerca de 10V en circuito abierto.',
+  },
+  {
+    t: 'Resistencia de 10 kΩ, no cortocircuito',
+    d: 'Con seis pines, cortocircuitar a ciegas es imprudente. Si al poner 10 kΩ el voltaje se desploma, es entrada de atenuacion — alta impedancia y corriente limitada. Si no se mueve, es un riel de alimentacion y no se toca.',
+  },
+];
 
 const STAGES = [
   { n: '0', t: 'Manual', d: 'Lapiceros de pH y EC, dosificacion a mano. Aprendes que hace tu solucion.', now: true },
@@ -118,6 +135,114 @@ export default function Control() {
             <p className="text-sm text-gray-500">
               Un 1N4007 en paralelo con cada motor, catodo al positivo. El tablero protege sus propias bobinas, no el
               golpe inductivo de la bomba — ese arco se come los contactos del rele.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* The light as an actuator */}
+      <section>
+        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">
+          La luz como actuador — el bus RJ11
+        </h3>
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 mb-4">
+          <DimBus />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div className="bg-gray-900 border border-red-900/40 rounded-xl p-5">
+            <h4 className="font-semibold text-red-400 mb-2">No es LAN</h4>
+            <p className="text-sm text-gray-400">
+              Se parece a Ethernet y no lo es: seis contactos contra ocho, y nada de red detras. No hay IP, no hay
+              protocolo que hablar. Es un bus de control sobre cable de telefono — mejor noticia para nosotros que si
+              fuera red.
+            </p>
+          </div>
+          <div className="bg-gray-900 border border-amber-800/50 rounded-xl p-5">
+            <h4 className="font-semibold text-amber-400 mb-2">La perilla va en EXT</h4>
+            <p className="text-sm text-gray-400">
+              Sin eso el puerto se ignora y manda la perilla. Si se encadenan varias luces,{' '}
+              <span className="text-gray-200">todas</span> tienen que estar en EXT.
+            </p>
+          </div>
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h4 className="font-semibold text-gray-200 mb-2">Cable de seis conductores</h4>
+            <p className="text-sm text-gray-500">
+              Un cable de telefono comun suele ser 6P4C: entra en el jack pero deja los pines 1 y 6 sin conectar. Si la
+              senal esta en un extremo, no pasa nada y parece que algo esta roto.
+            </p>
+          </div>
+        </div>
+
+        {/* Two hypotheses */}
+        <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Dos hipotesis abiertas</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h4 className="font-semibold text-gray-200 mb-2">A · Analogico 0-10V</h4>
+            <p className="text-sm text-gray-500">
+              Dos pines, senal continua. Es el estandar de la industria y hay gente manejando asi un Mars Hydro desde un
+              ESP32. Requiere convertir el PWM de 3.3V a 0-10V, o un{' '}
+              <span className="text-gray-300 font-mono">MCP4725</span> mas amplificacion — el complemento natural del
+              ADS1115 que ya tenemos.
+            </p>
+          </div>
+          <div className="bg-gray-900 border border-green-800/50 rounded-xl p-5">
+            <h4 className="font-semibold text-green-400 mb-2">B · Seleccion por pasos</h4>
+            <p className="text-sm text-gray-400">
+              VIVOSUN declara atenuacion en cuatro escalones — {FIXTURE.dimSteps.join('/')}% y OFF — y el GrowHub
+              tampoco da continuo. Cuatro lineas de senal mas un comun mas una de reserva{' '}
+              <span className="text-gray-200">explican los seis pines exactamente</span>. Si es esto, se controla con
+              cuatro salidas digitales: sin DAC, sin amplificador, mas simple que la hipotesis A.
+            </p>
+          </div>
+        </div>
+        <p className="text-xs text-gray-600 mb-4">
+          La ambiguedad esta en el propio manual: para la app dice &quot;25%-100%&quot;, con guion, que podria significar
+          continuo. Si la app da continuo, el bus lleva senal analogica y la perilla solo la cuantiza.
+        </p>
+
+        {/* Identification procedure */}
+        <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">
+          Identificar los pines antes de conectar nada
+        </h4>
+        <div className="space-y-2 mb-4">
+          {BUS_TESTS.map((t, i) => (
+            <div key={t.t} className="flex gap-3 items-start bg-gray-900 border border-gray-800 rounded-xl p-4">
+              <span className="text-xs font-mono text-green-500 bg-green-950 px-2 py-1 rounded shrink-0">{i + 1}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-200">{t.t}</p>
+                <p className="text-sm text-gray-500 mt-0.5">{t.d}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-gray-600 mb-4">
+          El pinout no esta estandarizado entre marcas y VIVOSUN no lo documenta, asi que meter voltaje a ciegas puede
+          danar el driver. Los tres tests solo miden; no inyectan nada.
+        </p>
+
+        {/* What it unlocks */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-900 border border-green-800/50 rounded-xl p-5">
+            <h4 className="font-semibold text-green-400 mb-2">Lo que desbloquea: el lazo de DLI</h4>
+            <p className="text-sm text-gray-400">
+              Con la luz atenuable desde el ESP32 deja de ser un insumo fijo y pasa a ser{' '}
+              <span className="text-gray-200 font-semibold">un actuador</span>. Ahi el lazo cierra: el BH1750 mide PPFD,
+              se integra el DLI acumulado del dia, y se ajusta para aterrizar en objetivo. Si la planta crece y sombrea,
+              el sistema compensa solo.
+            </p>
+            <p className="text-sm text-gray-500 mt-3">
+              Aunque sean cuatro escalones el lazo no se cae: la intensidad queda de control grueso y{' '}
+              <span className="text-gray-300">el fotoperiodo de control fino</span>, porque el tiempo no esta
+              cuantizado.
+            </p>
+          </div>
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+            <h4 className="font-semibold text-gray-200 mb-2">Lo que no resuelve</h4>
+            <p className="text-sm text-gray-500">
+              Atenuar a cero normalmente no apaga: casi todos los drivers tienen un minimo. Para apagado real hay que
+              cortar corriente con un rele. Y conviene dejar el timer mecanico puesto hasta que el lazo del ESP32 este
+              probado — mismo criterio por etapas que el dosificador.
             </p>
           </div>
         </div>

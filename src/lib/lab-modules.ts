@@ -65,9 +65,9 @@ export const LAB_MODULES: readonly LabModule[] = [
   {
     slug: 'control',
     short: 'Control',
-    label: 'Control y dosificacion',
+    label: 'Control y actuadores',
     blurb:
-      'Un dosificador sin topes puede matar las tres plantas en una noche. La maquina de estados y sus barandas importan mas que el hardware.',
+      'Dos actuadores: el dosificador, que sin topes puede matar las tres plantas en una noche, y la luz, que por el bus RJ11 deja de ser un insumo fijo.',
     icon: 'M9 2v3 M15 2v3 M9 19v3 M15 19v3 M2 9h3 M2 15h3 M19 9h3 M19 15h3 M6 6h12v12H6z M10 10h4v4h-4z',
   },
   {

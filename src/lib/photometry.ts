@@ -22,6 +22,31 @@ export const RATE_USD_PER_KWH = 0.1;
 /** LEDs convert ~40-45% of input power to photons; the rest is heat. */
 export const LIGHT_FRACTION = 0.43;
 
+/**
+ * The fixture actually bought, from VIVOSUN's own manual and product page.
+ *
+ * Note what is missing: VIVOSUN publishes neither PPF (umol/s) nor efficacy
+ * (umol/J) for this light, which is why our own estimate is still the only
+ * photon-based figure we have. The PPFD they do publish is a centre reading at
+ * a stated height, not an average over the footprint, so it sits above our
+ * area average without contradicting it.
+ */
+export const FIXTURE = {
+  model: 'VSL-LL100',
+  watts: 100,
+  ppfdCentreAt12in: 521,
+  panelIn: [12, 12, 2.4] as const,
+  weightLb: 4.4,
+  lifespanHours: 36000,
+  ingress: 'IP65',
+  daisyChainMax: 7,
+  /** Discrete. The knob and the GrowHub both offer only these steps. */
+  dimSteps: [25, 50, 75, 100] as const,
+  spectrum: ['3000K', '5000K', '660nm', '750nm'] as const,
+  publishedPpf: null,
+  publishedEfficacy: null,
+} as const;
+
 const DAYS_PER_MONTH = 30.4;
 
 /** Fixture efficacy in umol/J. Budget small fixtures vs. good ones (report 02). */
