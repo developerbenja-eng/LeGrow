@@ -9,6 +9,7 @@ import Agua from '../modules/Agua';
 import Vpd from '../modules/Vpd';
 import Control from '../modules/Control';
 import Rotacion from '../modules/Rotacion';
+import Inventario from '../modules/Inventario';
 import Materiales from '../modules/Materiales';
 import Experimento from '../modules/Experimento';
 import Bitacora from '../modules/Bitacora';
@@ -22,6 +23,7 @@ const VIEWS: Record<string, React.ComponentType> = {
   vpd: Vpd,
   control: Control,
   rotacion: Rotacion,
+  inventario: Inventario,
   materiales: Materiales,
   experimento: Experimento,
   bitacora: Bitacora,

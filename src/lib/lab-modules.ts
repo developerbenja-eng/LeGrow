@@ -87,6 +87,14 @@ export const LAB_MODULES: readonly LabModule[] = [
     icon: 'M9 3v6l-5 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-5-9V3 M8 3h8',
   },
   {
+    slug: 'inventario',
+    short: 'Inventario',
+    label: 'Inventario de piezas',
+    blurb:
+      'Lo que hay fisicamente, con su interfaz electrica junto a la foto — para que ningun diagrama de conexion tenga que suponer nada.',
+    icon: 'M4 7.5 L12 3.5 L20 7.5 V16.5 L12 20.5 L4 16.5 Z M4 7.5 L12 11.5 L20 7.5 M12 11.5 V20.5',
+  },
+  {
     slug: 'materiales',
     short: 'Materiales',
     label: 'Lista de materiales',

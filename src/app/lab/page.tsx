@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { LAB_MODULES, moduleOpen } from '@/lib/lab-modules';
+import { PARTS, unassigned } from '@/lib/inventory';
 import { LOG, SPECIES, WATER, bomBlocking, bomOrdered, bomPending, bomSum } from '@/lib/lab-data';
 import { EFFICACY, STACK, TARGETS, TENTS, areaM2, dli, hangRoom, monthlyCost, ppfd, vpd } from '@/lib/photometry';
 
@@ -37,6 +38,7 @@ export default function LabOverview() {
     control: 'etapa 0 de 4 · manual',
     rotacion: 'diseno cruzado · 2 carpas',
     experimento: 'n = 3 · piso de ruido',
+    inventario: `${PARTS.length} piezas · ${unassigned().length} sin asignar`,
     materiales: `${bomOrdered().length} pedidos · ${bomPending().length} faltan`,
     bitacora: `${openTotal} abiertos · ${LOG.length - openTotal} decididos`,
   };
