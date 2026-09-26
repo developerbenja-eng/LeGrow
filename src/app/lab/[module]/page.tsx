@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { LAB_MODULES, moduleBySlug, moduleNeighbours } from '@/lib/lab-modules';
+import Procedimientos from '../modules/Procedimientos';
 import LightFootprint from '../LightFootprint';
 import Planta from '../modules/Planta';
 import Nutrientes from '../modules/Nutrientes';
@@ -16,6 +17,7 @@ import Bitacora from '../modules/Bitacora';
 
 /** Slug -> content. The registry owns the metadata; this owns the rendering. */
 const VIEWS: Record<string, React.ComponentType> = {
+  procedimientos: Procedimientos,
   luz: LightFootprint,
   planta: Planta,
   nutrientes: Nutrientes,

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { LAB_MODULES, moduleOpen } from '@/lib/lab-modules';
 import { PARTS, unassigned } from '@/lib/inventory';
+import { PROCEDURES, byPhase } from '@/lib/procedures';
 import { LOG, SPECIES, WATER, bomBlocking, bomOrdered, bomPending, bomSum } from '@/lib/lab-data';
 import { EFFICACY, STACK, TARGETS, TENTS, areaM2, dli, hangRoom, monthlyCost, ppfd, vpd } from '@/lib/photometry';
 
@@ -30,6 +31,7 @@ export default function LabOverview() {
 
   // One live figure per module, so the board reads as a dashboard and not a menu.
   const METRIC: Record<string, string> = {
+    procedimientos: `${PROCEDURES.length} procedimientos · ${byPhase('hoy').length} para hoy`,
     luz: `${Math.round(ppfdLow)}–${Math.round(ppfdHigh)} PPFD · DLI ${dli(ppfdHigh, RIG.hours).toFixed(1)}`,
     planta: `Seascape · ${SPECIES.filter((s) => s.verdict === 'out').length} especies descartadas`,
     nutrientes: '3 bombas · circuito cerrado',

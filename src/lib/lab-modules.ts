@@ -23,6 +23,14 @@ export type LabModule = {
 
 export const LAB_MODULES: readonly LabModule[] = [
   {
+    slug: 'procedimientos',
+    short: 'Procedimientos',
+    label: 'Procedimientos',
+    blurb:
+      'La guia para seguir con las manos ocupadas: un paso por accion, las trampas marcadas, y que fotografiar en cada uno para que esto se ilustre solo.',
+    icon: 'M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1z M8 6H6a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-2 M9.5 13l2 2 3.5-3.5',
+  },
+  {
     slug: 'luz',
     short: 'Luz',
     label: 'Luz y huella',
