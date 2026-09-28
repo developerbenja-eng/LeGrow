@@ -255,7 +255,53 @@ export const LOG: readonly LogEntry[] = [
     text: 'La perilla de la luminaria tiene que ir en EXT o el puerto se ignora. Si se encadenan varias, todas en EXT.',
   },
 
+  {
+    state: 'done',
+    module: 'rendimiento',
+    text: 'El "3-4 lb por planta" del informe 05 no tiene fuente y el informe 01 lo da sin periodo. Lo medido (SARE GNE18-169) queda en 1.1-1.8 lb/ano, cerca de la mitad.',
+  },
+  {
+    state: 'done',
+    module: 'rendimiento',
+    text: 'Las 27-36 lb del informe 04 son para NUEVE plantas, el plan 3x3 original. Nuestro rig tiene tres: la banda honesta es 3.4-6.9 lb al ano.',
+  },
+  {
+    state: 'done',
+    module: 'rendimiento',
+    text: 'La unidad correcta para un cultivo continuo es gramos por planta por semana, y el resultado es una curva acumulada — no un numero anual.',
+  },
+  {
+    state: 'done',
+    module: 'rendimiento',
+    text: 'La produccion es ciclica, con caida en las semanas 6-7. El estudio recomienda escalonar plantaciones: continuo es propiedad del sistema, no de la planta.',
+  },
+  {
+    state: 'done',
+    module: 'luz',
+    text: 'Objetivo de DLI corregido de 17-22 a 20-25 segun OSU, con 12 como piso y sobre 30 como estres. Nuestro rig a 100W y 17h da 20.6-25.3: dentro.',
+  },
+  {
+    state: 'done',
+    module: 'vpd',
+    text: 'CO2 corregido a 1000-1500 ppm (OSU). Cuantificado lo que cuesta no tener fuente: 15-20% de rendimiento en cultivo de fruto.',
+  },
+
   // --- Open ---
+  {
+    state: 'open',
+    module: 'planta',
+    text: 'Seascape rindio mas que Albion y San Andreas en el estudio SARE, pero fue descartada por forma, textura y maduracion anormales a temperatura alta. Se suma al problema de la noche de Memphis.',
+  },
+  {
+    state: 'open',
+    module: 'vpd',
+    text: 'OSU recomienda contra tipburn tres horas a 95% de humedad nocturna, 2-3 noches seguidas, y dos noches por semana sin humidificar. Contradice nuestra regla plana de 40-60% RH.',
+  },
+  {
+    state: 'open',
+    module: 'rendimiento',
+    text: 'Adoptar el criterio de fruta comercial del estudio verbatim (80% rojo, ≥10 g, sin deformidades) para que nuestros numeros sean comparables con los suyos.',
+  },
   {
     state: 'open',
     module: 'control',

@@ -5,6 +5,7 @@ import { LAB_MODULES, moduleBySlug, moduleNeighbours } from '@/lib/lab-modules';
 import Procedimientos from '../modules/Procedimientos';
 import LightFootprint from '../LightFootprint';
 import Planta from '../modules/Planta';
+import Rendimiento from '../modules/Rendimiento';
 import Nutrientes from '../modules/Nutrientes';
 import Agua from '../modules/Agua';
 import Vpd from '../modules/Vpd';
@@ -20,6 +21,7 @@ const VIEWS: Record<string, React.ComponentType> = {
   procedimientos: Procedimientos,
   luz: LightFootprint,
   planta: Planta,
+  rendimiento: Rendimiento,
   nutrientes: Nutrientes,
   agua: Agua,
   vpd: Vpd,

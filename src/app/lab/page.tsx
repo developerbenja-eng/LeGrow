@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { LAB_MODULES, moduleOpen } from '@/lib/lab-modules';
 import { PARTS, unassigned } from '@/lib/inventory';
 import { PROCEDURES, byPhase } from '@/lib/procedures';
+import { band } from '@/lib/yield';
 import { LOG, SPECIES, WATER, bomBlocking, bomOrdered, bomPending, bomSum } from '@/lib/lab-data';
 import { EFFICACY, STACK, TARGETS, TENTS, areaM2, dli, hangRoom, monthlyCost, ppfd, vpd } from '@/lib/photometry';
 
@@ -34,6 +35,7 @@ export default function LabOverview() {
     procedimientos: `${PROCEDURES.length} procedimientos · ${byPhase('hoy').length} para hoy`,
     luz: `${Math.round(ppfdLow)}–${Math.round(ppfdHigh)} PPFD · DLI ${dli(ppfdHigh, RIG.hours).toFixed(1)}`,
     planta: `Seascape · ${SPECIES.filter((s) => s.verdict === 'out').length} especies descartadas`,
+    rendimiento: `${band().lo.toFixed(1)}–${band().hi.toFixed(1)} lb/ano · 3 plantas`,
     nutrientes: '3 bombas · circuito cerrado',
     agua: `llave ${WATER.tap.tds} ppm · techo ${WATER.rainfallMm} mm/ano`,
     vpd: `${vpd(24, 40).toFixed(2)} kPa en la esquina legal`,
