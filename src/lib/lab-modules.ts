@@ -47,6 +47,14 @@ export const LAB_MODULES: readonly LabModule[] = [
     icon: 'M12 21 V9 M12 14 C7.5 14 5.5 10.5 5.5 7 c4.5 0 6.5 2.5 6.5 7 M12 12 c0-4.5 2-7 6.5-7 0 3.5-2 7-6.5 7',
   },
   {
+    slug: 'rendimiento',
+    short: 'Rendimiento',
+    label: 'Rendimiento y su medicion',
+    blurb:
+      'Que significa "3-4 libras por planta" y de donde sale. Lo medido queda sistematicamente por debajo de lo afirmado, y la unidad correcta no es anual.',
+    icon: 'M4 19 V5 M4 19 H20 M7.5 15.5 l3.5-4.5 3 3 4.5-6',
+  },
+  {
     slug: 'nutrientes',
     short: 'Nutrientes',
     label: 'Circuito de nutrientes',

@@ -57,11 +57,26 @@ export type Range = readonly [number, number];
 /** Agronomic targets for day-neutral strawberry (report 07). */
 export const TARGETS = {
   ppfd: [300, 350] as Range,
-  dli: [17, 22] as Range,
+  /**
+   * Raised from the report's 17-22 to Ohio State's measured optimum for
+   * controlled-environment strawberry. They also give 12 as the floor for
+   * good productivity and warn that over 30 needs shading. The SARE lighting
+   * trial agrees: 26 mol beat 14 mol significantly.
+   */
+  dli: [20, 25] as Range,
+  dliFloor: 12,
+  dliStress: 30,
   vpd: [0.8, 1.2] as Range,
   tempDayC: [20, 24] as Range,
   rh: [40, 60] as Range,
-  co2: [800, 1200] as Range,
+  /** Ohio State's working range, above the report's 800-1200. */
+  co2: [1000, 1500] as Range,
+  /** What enrichment is worth on a fruiting crop, per OSU. */
+  co2GainPct: [15, 20] as Range,
+  /** A 24-hour mean matters more than hitting either day or night figure. */
+  meanDayC: 18,
+  /** The crown's own temperature; OSU measured ~10% more yield controlling it. */
+  crownC: 18,
   ph: [5.8, 6.2] as Range,
   ec: [1.2, 1.8] as Range,
 } as const;
