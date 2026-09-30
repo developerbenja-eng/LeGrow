@@ -23,6 +23,9 @@ export default function Home() {
             <Link href="/lab" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition-colors">
               Laboratorio
             </Link>
+            <Link href="/pozo" className="px-4 py-2 bg-sky-700 hover:bg-sky-600 rounded-lg text-sm font-medium transition-colors">
+              Tapa de pozo
+            </Link>
             <Link href="/dashboard" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors">
               Live Dashboard
             </Link>
