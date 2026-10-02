@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "frame-ancestors 'self' https://lenotes.ledesign.ai http://localhost:3000",
+            value: "frame-ancestors 'self' https://lenotes.ledesign.ai http://localhost:3110",
           },
         ],
       },
