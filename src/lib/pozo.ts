@@ -86,7 +86,7 @@ export const BUS: Record<Bus, { color: string; label: string }> = {
   i2s: { color: '#a78bfa', label: 'I2S audio' },
   i2c: { color: '#2dd4bf', label: 'I2C + despertar Notecard' },
   spi: { color: '#a3e635', label: 'SPI microSD' },
-  ow: { color: '#fbbf24', label: '1-Wire temperatura' },
+  ow: { color: '#fbbf24', label: 'Temperatura: 1-Wire y DHT11' },
   adc: { color: '#fb923c', label: 'Medicion de bateria' },
 };
 
@@ -112,6 +112,7 @@ export const NETS: readonly Net[] = [
   { name: 'SCL', gpio: 9, bus: 'i2c', what: 'Reloj I2C' },
   { name: 'ATTN', gpio: 16, bus: 'i2c', what: 'El Notecard despierta a la ESP32 (opcional)' },
   { name: '1W', gpio: 14, bus: 'ow', what: 'Cadena de DS18B20' },
+  { name: 'DHT', gpio: 17, bus: 'ow', what: 'Dato del DHT11 de banco' },
   { name: 'CS', gpio: 10, bus: 'spi', what: 'Seleccion de la microSD' },
   { name: 'MOSI', gpio: 11, bus: 'spi', what: 'Datos hacia la microSD' },
   { name: 'SCK', gpio: 12, bus: 'spi', what: 'Reloj SPI' },
@@ -219,6 +220,19 @@ export const MODULES: readonly WModule[] = [
       { pin: 'SCL', net: 'SCL' },
     ],
     note: 'Leer el registro 0xD0 primero: 0x60 es BME280, 0x58 es BMP280 sin humedad. Los dos sirven para corregir la velocidad del sonido.',
+  },
+  {
+    id: 'dht',
+    name: 'DHT11',
+    sub: 'Temperatura de banco',
+    part: 'dht11-module',
+    where: 'En la protoboard, lejos del regulador de la ESP32',
+    power: [
+      { pin: '+', rail: '3V3' },
+      { pin: '−', rail: 'GND' },
+    ],
+    signals: [{ pin: 'out', net: 'DHT', note: 'El modulo de 3 pines ya trae su pull-up' }],
+    note: 'Reemplazo de banco mientras no este el BME280: ±2 °C, que a 3 m es cerca de 1 cm. El firmware lo usa solo si no encuentra un BME280 y lo dice en cada disparo.',
   },
   {
     id: 'note',
@@ -354,6 +368,7 @@ export const HAVE: readonly Have[] = [
   { part: 'esp32-s3-devkitc', job: 'Controlador: I2S full duplex y PSRAM para las grabaciones' },
   { part: 'notecard-blues', job: 'Reporte celular desde el pozo' },
   { part: 'bme280-gy', job: 'Temperatura y presion en la tapa' },
+  { part: 'dht11-module', job: 'Temperatura en el banco mientras no este el BME280' },
   { part: 'microsd-module', job: 'WAV crudo y CSV de cada disparo' },
   { part: 'lipo-1000mah', job: 'Bateria' },
   { part: 'tp4056-charger', job: 'Carga y proteccion de la LiPo' },

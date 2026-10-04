@@ -21,6 +21,9 @@ const PINS_H = `// Tapa de eco — ESP32-S3-DevKitC-1 (N16R8)
 // 1-Wire: cadena de DS18B20, pull-up de 4.7k a 3V3
 #define PIN_ONEWIRE    14
 
+// DHT11 de banco (mientras no este el BME280); -1 lo desactiva
+#define PIN_DHT        17
+
 // SPI microSD
 #define PIN_SD_CS      10
 #define PIN_SD_MOSI    11
@@ -66,7 +69,7 @@ export default function Cableado() {
       </section>
 
       <section className="space-y-4">
-        <SectionHead kicker="Mapa de pines" title="Los 13 GPIO en uso" />
+        <SectionHead kicker="Mapa de pines" title={`Los ${NETS.length} GPIO en uso`} />
         <div className="overflow-x-auto bg-gray-900 border border-gray-800 rounded-xl">
           <table className="w-full text-sm">
             <thead>
